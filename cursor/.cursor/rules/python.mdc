@@ -1,0 +1,41 @@
+---
+description: Python-specific conventions
+globs: "**/*.py"
+alwaysApply: false
+---
+
+# Python Conventions
+
+These rules apply only to `.py` files. They extend (not override) the baseline rules in `project-always.mdc`.
+
+---
+
+## Types & Style
+
+- Use type annotations on all public functions and class methods (PEP 484).
+- Prefer `dataclasses` or `pydantic` models over plain `dict` for structured data.
+- No `# type: ignore` without a comment explaining why.
+- Follow PEP 8; enforce with `ruff` (or `flake8` + `isort` if already configured).
+- Format with `black`; do not mix formatter and manual style changes in the same commit.
+
+## Imports
+
+- Group imports: stdlib → third-party → local, separated by blank lines.
+- Use absolute imports; avoid relative imports outside of package internals.
+- Never use wildcard imports (`from module import *`).
+
+## Error Handling
+
+- Raise built-in exceptions (`ValueError`, `TypeError`, `RuntimeError`) or custom subclasses — not bare `Exception`.
+- Use `logging` with structured fields; do not use `print` for diagnostics.
+
+## Testing
+
+- Use `pytest`; do not mix `unittest` and `pytest` in the same project.
+- Name test files `test_<module>.py` and test functions `test_<behaviour>`.
+- Use `pytest.mark.parametrize` for table-driven tests.
+
+## Dependencies & Packaging
+
+- Pin dependencies in `requirements.txt` or `pyproject.toml`; include a lock file (`pip-tools` / `poetry.lock`).
+- Do not add new packages without checking for existing equivalents in the project.
