@@ -1,0 +1,37 @@
+---
+description: TypeScript-specific conventions
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# TypeScript Conventions
+
+These rules apply only to `.ts` and `.tsx` files. They extend (not override) the baseline rules in `project-always.mdc`.
+
+---
+
+## Types
+
+- Enable `strict` mode in `tsconfig.json`; never disable `strictNullChecks`.
+- Prefer `type` aliases for unions, intersections, and mapped types; use `interface` for object shapes that may be extended.
+- No `any` — use `unknown` and narrow with type guards instead.
+- No non-null assertions (`!`) — handle nullability explicitly.
+- Export all domain types from a single barrel file (e.g. `types/index.ts`).
+- Avoid `as` type casts; if a cast is unavoidable, add a comment explaining why.
+
+## Functions & Modules
+
+- Prefer named exports over default exports for easier rename-refactoring.
+- Avoid `namespace` — use ES modules (`import`/`export`) instead.
+- Mark callbacks and event handlers `async` only if they actually `await` something.
+
+## Null / Undefined Handling
+
+- Prefer `undefined` over `null` in new code; `null` only when interfacing with APIs that return it.
+- Use optional chaining (`?.`) and nullish coalescing (`??`) rather than `||` guards.
+
+## Linting & Formatting
+
+- Use `eslint` with `@typescript-eslint/recommended`; do not suppress rules without a comment.
+- Format with `prettier`; do not mix `prettier` and manual style fixes in the same commit.
+- Run `tsc --noEmit` as part of the lint step.
