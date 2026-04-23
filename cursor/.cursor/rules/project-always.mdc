@@ -98,7 +98,7 @@ Always run lint/typecheck after a series of edits.
 
 ## Cursor-Specific Notes
 
-- This file lives at `.cursor/rules/project-always.mdc` — the path Cursor scans for Agent rules.
+- This file lives at `cursor/.cursor/rules/project-always.mdc` in the AI-Helpers repo; copy it to `.cursor/rules/project-always.mdc` at the root of your own project — the path Cursor scans for Agent rules.
 - `alwaysApply: true` ensures these rules load on **every** Agent interaction without requiring semantic matching.
 - For language- or path-scoped rules, create companion `.mdc` files with a `globs` front-matter key, for example:
 
