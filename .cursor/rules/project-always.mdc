@@ -1,0 +1,69 @@
+---
+description: Core project ways of working — applied to every Agent interaction.
+alwaysApply: true
+---
+
+# Project Ways of Working
+
+These rules are loaded automatically by Cursor on every Agent interaction (`alwaysApply: true`). They define the baseline behaviour expected across the entire codebase, regardless of file type.
+
+---
+
+## Code Style
+
+- Follow the conventions already established in the project. Do not introduce new patterns without discussion.
+- Prefer explicit, readable code over clever one-liners.
+- Keep functions and methods small and single-purpose.
+- Respect existing linter and formatter configuration (`.eslintrc`, `pyproject.toml`, `.prettierrc`, etc.).
+
+## Error Handling
+
+- Never swallow exceptions silently. Log or re-raise with context.
+- Distinguish recoverable errors (return/log) from unrecoverable ones (raise/exit).
+- Validate all inputs at public boundaries (API handlers, CLI entry points, exported functions).
+- Use structured error types where the language supports it.
+
+## Testing
+
+- Write or update tests for every behaviour change, not just new features.
+- Unit tests cover logic; integration tests cover I/O boundaries.
+- All tests must pass before a task is considered done.
+- No placeholder `assert True` / no-op tests.
+
+## Security
+
+- Never hardcode secrets, tokens, or credentials — use environment variables or a secrets manager.
+- Sanitise all user-supplied input before use in queries, shell commands, or HTML output.
+- Apply the principle of least privilege: request only the permissions the code actually needs.
+- Flag any dependency changes that touch security-sensitive packages.
+
+## Git
+
+- Write commit messages in the imperative mood: *"Add rate limiter"*, not *"Added rate limiter"*.
+- Keep commits atomic — one logical change per commit.
+- Branch names: `feat/<topic>`, `fix/<topic>`, `chore/<topic>`.
+- Do not force-push to shared branches.
+
+## Documentation
+
+- Update docstrings and inline comments whenever behaviour changes.
+- Update README when public interfaces, environment variables, or setup steps change.
+- Add comments only where intent is non-obvious — prefer self-documenting code.
+
+---
+
+## Cursor-Specific Notes
+
+- This file lives at `.cursor/rules/project-always.mdc` — the path Cursor scans for Agent rules.
+- `alwaysApply: true` ensures these rules load on **every** Agent interaction without requiring semantic matching.
+- For language- or path-scoped rules, create companion `.mdc` files with a `globs` front-matter key, for example:
+
+  ```yaml
+  ---
+  description: TypeScript-specific rules
+  globs: "**/*.{ts,tsx}"
+  alwaysApply: false
+  ---
+  ```
+
+  Place scoped files alongside this one in `.cursor/rules/`.
