@@ -13,6 +13,10 @@
 
 Codex will attempt to run the following commands after completing a task. All checks must pass before the task is considered done. Adjust these commands to match the project's actual toolchain.
 
+- After any code change: `<your lint/typecheck command>`
+- After logic changes: `<your test command for the affected module>`
+- After dependency changes: verify lock file is updated
+
 ```bash
 # Lint
 npm run lint         # or: ruff check . / golangci-lint run / etc.
@@ -31,46 +35,91 @@ If a project does not have one of these scripts, skip that step — do not creat
 
 ---
 
+## Build & Run Commands
+
+- Build:            `<your build command>`
+- Test (single):    `<your single-test command>`
+- Lint / typecheck: `<your lint command>`
+- Dev server:       `<your dev-server command>`
+
 ## Code Style
 
-- Follow the conventions already present in the codebase. Do not introduce new patterns without discussion.
-- Prefer explicit, readable code over clever one-liners.
-- Keep functions small and single-purpose.
-- Respect existing linter and formatter configuration files (`.eslintrc`, `pyproject.toml`, `.prettierrc`, etc.).
+- Prefer functional programming over OOP; use classes only for connectors and interfaces to external systems.
+- Write pure functions — return new values, never mutate input parameters or global state.
+- Write single-purpose functions — no multi-mode behaviour, no flag parameters that switch logic branches.
+- Never use default parameter values — make all parameters explicit at the call site.
+- Create named type definitions for complex data structures; no anonymous inline shapes crossing function boundaries.
+- Before writing new logic, search with `rg` for existing implementations.
+- Follow YAGNI — do not add abstractions for speculative future use cases.
+- Keep diffs small; prefer targeted edits over wide refactors unless the full refactor is the explicit task.
 
 ## Error Handling
 
-- Never swallow exceptions silently. Log or re-raise with context.
-- Distinguish recoverable errors (return/log) from unrecoverable ones (raise/exit).
-- Validate all inputs at public boundaries.
-- Use structured error types where the language supports it.
+- Raise errors explicitly at the point of failure; never swallow exceptions silently.
+- Use specific error types; avoid generic catch-alls that hide root causes.
+- Fix root causes, not symptoms; no workaround shims unless the root fix is out of scope.
+- No fallbacks or degraded-mode logic unless explicitly requested.
+- External service calls: retry with exponential backoff, log each retry as a warning, re-raise the last error.
+- Error messages must include: request params, response body, status codes, correlation IDs.
+- Use structured logging fields — do not interpolate dynamic values into message strings.
 
 ## Testing
 
-- Write or update tests for every behaviour change.
-- Unit tests cover logic; integration tests cover I/O boundaries.
-- All tests must pass before a task is marked complete.
-- No placeholder `assert True` / no-op tests.
+- Match the existing test strategy; do not introduce new frameworks without discussion.
+- Do not add tests unless the task explicitly requires them.
+- Prefer integration or end-to-end tests over unit tests.
+- Avoid mocks when real service calls are practical.
+- Unit tests are acceptable for pure data-transformation functions only.
+- Never add tests to increase coverage numbers.
+- Add the minimum test surface area for the current change.
 
-## Security
+## Security — NEVER
 
-- Never hardcode secrets, tokens, or credentials — use environment variables or a secrets manager.
-- Sanitise all user-supplied input before use in queries, shell commands, or HTML.
-- Apply the principle of least privilege.
-- Flag dependency changes that affect security-sensitive packages.
+- Commit secrets, API keys, tokens, passwords, or `.env` files.
+- Force-push to `main`, `master`, or any protected branch.
+- Add new external dependencies without asking first.
+- Delete files outside the project directory.
+- Log or print PII, credentials, or tokens.
+- Build SQL queries or shell commands via string concatenation.
+
+## Security — ASK FIRST
+
+- Adding any new external dependency (explain what it replaces).
+- Running database migrations.
+- Deleting or renaming files.
+- Modifying CI/CD configs or deployment definitions.
+- Touching authentication or authorization logic.
+
+## Security — ALWAYS
+
+- Validate and sanitize external input before use in queries, shell calls, or file paths.
+- Use parameterized queries for all database interactions.
+- Reference secrets by environment variable name, never by value.
 
 ## Git
 
-- Commit messages in the imperative mood: *"Fix null-check in auth middleware"*.
-- One logical change per commit.
-- Branch names: `feat/<topic>`, `fix/<topic>`, `chore/<topic>`.
-- Do not force-push to shared branches.
+- Conventional commits: `type(scope): description`
+  Valid types: `feat` `fix` `refactor` `test` `chore` `docs`
+- Atomic commits — one logical change per commit.
+- Branch naming: `type/short-description`.
+- Non-interactive diff always: `git --no-pager diff` or `git diff | cat`.
+- Do not commit build artifacts, `dist/`, `__pycache__/`, or untracked lock files.
+
+## Workflow
+
+- Keep changes minimal and scoped to the current task.
+- Use `rg` for codebase search; use non-interactive flags on all shell commands.
+- Before writing new code, search for similar existing patterns first.
+- When the correct approach is unclear, stop and ask — do not guess.
+- Explain the plan before writing code when the task spans more than two files.
 
 ## Documentation
 
-- Update docstrings and comments whenever behaviour changes.
-- Update README when public interfaces, environment variables, or setup steps change.
-- Add comments only where intent is non-obvious — prefer self-documenting code.
+- Documentation lives in docstrings/JSDoc of the functions or classes it describes.
+- Separate docs files only for ADRs, onboarding guides, or cross-module architecture concepts.
+- Never duplicate documentation across files — one canonical location.
+- Document current state only; no changelogs or history in docstrings.
+- Comment *why*, not *what* — never restate what the code already says.
 
 ---
 
