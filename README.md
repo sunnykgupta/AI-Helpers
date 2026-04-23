@@ -14,13 +14,17 @@ A collection of helper (`.md`) files for use across various Gen AI tools. The go
 
 ```
 AI-Helpers/
+├── .cursor/
+│   └── rules/
+│       └── project-always.mdc   # Always-applied Cursor Agent rules
 ├── codex/
 │   ├── README.md
-│   └── AGENTS.md        # Agent instructions for OpenAI Codex
+│   └── AGENTS.md                # Agent instructions for OpenAI Codex
 ├── cursor/
-│   └── README.md
+│   └── README.md                # Usage guide for the Cursor rule file
 └── claude/
-    └── README.md
+    ├── README.md
+    └── CLAUDE.md                # Agent instructions for Claude Code
 ```
 
 ## Usage

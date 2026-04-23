@@ -1,46 +1,22 @@
-# AGENTS.md — OpenAI Codex Ways of Working
+---
+description: Core project conventions — code style, error handling, testing, security, git
+globs:
+alwaysApply: true
+---
 
-> Codex reads AGENTS.md files in a layered order:
-> 1. Global: `~/.codex/AGENTS.md`
-> 2. Repo root: `./AGENTS.md`
-> 3. Subdirectory: any `AGENTS.md` found in sub-folders relevant to the task
->
-> Each layer adds to (or overrides) the previous one. For project-specific overrides, use `AGENTS.override.md` in the repo root — it is merged on top of this file without replacing it.
+# Project Conventions
+
+These rules are loaded automatically by Cursor on every Agent interaction (`alwaysApply: true`). They define the baseline behaviour expected across the entire codebase, regardless of file type.
 
 ---
 
-## Programmatic Checks
-
-Codex will attempt to run the following commands after completing a task. All checks must pass before the task is considered done. Adjust these commands to match the project's actual toolchain.
-
-- After any code change: `<your lint/typecheck command>`
-- After logic changes: `<your test command for the affected module>`
-- After dependency changes: verify lock file is updated
-
-```bash
-# Lint
-npm run lint         # or: ruff check . / golangci-lint run / etc.
-
-# Type-check (if applicable)
-npm run typecheck    # or: mypy . / tsc --noEmit
-
-# Tests
-npm test             # or: pytest / go test ./...
-
-# Build (if applicable)
-npm run build
-```
-
-If a project does not have one of these scripts, skip that step — do not create placeholder scripts.
-
----
-
-## Build & Run Commands
+## Build & Verify Commands
 
 - Build:            `<your build command>`
 - Test (single):    `<your single-test command>`
 - Lint / typecheck: `<your lint command>`
-- Dev server:       `<your dev-server command>`
+
+Always run lint/typecheck after a series of edits.
 
 ## Code Style
 
@@ -49,7 +25,7 @@ If a project does not have one of these scripts, skip that step — do not creat
 - Write single-purpose functions — no multi-mode behaviour, no flag parameters that switch logic branches.
 - Never use default parameter values — make all parameters explicit at the call site.
 - Create named type definitions for complex data structures; no anonymous inline shapes crossing function boundaries.
-- Before writing new logic, search with `rg` for existing implementations.
+- Before writing new logic, search the codebase with `rg` for existing implementations.
 - Follow YAGNI — do not add abstractions for speculative future use cases.
 - Keep diffs small; prefer targeted edits over wide refactors unless the full refactor is the explicit task.
 
@@ -71,14 +47,12 @@ If a project does not have one of these scripts, skip that step — do not creat
 - Avoid mocks when real service calls are practical.
 - Unit tests are acceptable for pure data-transformation functions only.
 - Never add tests to increase coverage numbers.
-- Add the minimum test surface area for the current change.
 
 ## Security — NEVER
 
 - Commit secrets, API keys, tokens, passwords, or `.env` files.
 - Force-push to `main`, `master`, or any protected branch.
 - Add new external dependencies without asking first.
-- Delete files outside the project directory.
 - Log or print PII, credentials, or tokens.
 - Build SQL queries or shell commands via string concatenation.
 
@@ -102,8 +76,7 @@ If a project does not have one of these scripts, skip that step — do not creat
   Valid types: `feat` `fix` `refactor` `test` `chore` `docs`
 - Atomic commits — one logical change per commit.
 - Branch naming: `type/short-description`.
-- Non-interactive diff always: `git --no-pager diff` or `git diff | cat`.
-- Do not commit build artifacts, `dist/`, `__pycache__/`, or untracked lock files.
+- Non-interactive diff: `git --no-pager diff` or `git diff | cat`.
 
 ## Workflow
 
@@ -123,24 +96,18 @@ If a project does not have one of these scripts, skip that step — do not creat
 
 ---
 
-## Codex-Specific Reminders
+## Cursor-Specific Notes
 
-### `--ask-for-approval` Workflow
+- This file lives at `.cursor/rules/project-always.mdc` — the path Cursor scans for Agent rules.
+- `alwaysApply: true` ensures these rules load on **every** Agent interaction without requiring semantic matching.
+- For language- or path-scoped rules, create companion `.mdc` files with a `globs` front-matter key, for example:
 
-When running Codex with `--ask-for-approval`, it will pause before executing any shell command that has side effects (file writes, network calls, installs). Review each proposed command before approving. This is the recommended mode for production or shared environments.
+  ```yaml
+  ---
+  description: TypeScript-specific rules
+  globs: "**/*.{ts,tsx}"
+  alwaysApply: false
+  ---
+  ```
 
-### Override File
-
-`AGENTS.override.md` (repo root, gitignored) is merged on top of this file. Use it for:
-- Personal tool preferences that should not be shared
-- Temporary rule changes during an experiment
-- Local environment-specific commands
-
-### Layered Instruction Order
-
-| Scope | File | Notes |
-|-------|------|-------|
-| Global | `~/.codex/AGENTS.md` | Applies to all projects on this machine |
-| Repo root | `./AGENTS.md` | This file — shared with the team via version control |
-| Subdirectory | `<dir>/AGENTS.md` | Scoped to tasks within that directory |
-| Override | `./AGENTS.override.md` | Local overrides; gitignored |
+  Place scoped files alongside this one in `.cursor/rules/`.

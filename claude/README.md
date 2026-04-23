@@ -4,4 +4,6 @@ This directory contains helper files and ways of working for [Claude Code](https
 
 ## Files
 
-<!-- Add your Claude Code helper files here -->
+| File | Description |
+|------|-------------|
+| [CLAUDE.md](./CLAUDE.md) | Agent instructions, ways of working, and Claude Code-specific reminders |
