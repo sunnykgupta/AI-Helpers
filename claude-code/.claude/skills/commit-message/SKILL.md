@@ -17,7 +17,7 @@ Write commit messages that follow [Conventional Commits](https://www.conventiona
 <footer>
 ```
 
-- **type** (required): one of `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`
+- **type** (required): one of `feat`, `fix`, `refactor`, `test`, `chore`, `docs`
 - **scope** (optional): the module/area touched, e.g. `auth`, `api`, `parser`
 - **subject** (required): imperative mood, lowercase, no period, ≤ 50 chars
 - **body** (optional): wrap at 72 chars, explain *why* not *what*
