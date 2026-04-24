@@ -87,7 +87,7 @@ Prefer running a single targeted test over the full suite for speed.
 
 ## Skills
 
-Claude should consult the skills in .claude/skills/ for the following tasks:
+Claude should consult the skills in `.claude/skills/` for the following tasks:
 
 Writing commit messages → use the commit-message skill. It enforces Conventional Commits, which this repo requires for automated releases.
 Writing PR descriptions → use the pr-description skill. It matches our .github/PULL_REQUEST_TEMPLATE.md.
