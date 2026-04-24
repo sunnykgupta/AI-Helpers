@@ -85,6 +85,13 @@ Prefer running a single targeted test over the full suite for speed.
 - Document current state only; no changelogs or history in docstrings.
 - Comment *why*, not *what* — never restate what the code already says.
 
+## Skills
+
+Claude should consult the skills in `.claude/skills/` for the following tasks:
+
+Writing commit messages → use the commit-message skill. It follows our team's Conventional Commits convention and helps keep commit history consistent.
+Writing PR descriptions → use the pr-description skill.
+
 ---
 
 ## Claude Code-Specific Reminders
