@@ -89,7 +89,7 @@ Prefer running a single targeted test over the full suite for speed.
 
 Claude should consult the skills in `.claude/skills/` for the following tasks:
 
-Writing commit messages → use the commit-message skill. It enforces Conventional Commits, which this repo requires for automated releases.
+Writing commit messages → use the commit-message skill. It follows our team's Conventional Commits convention and helps keep commit history consistent.
 Writing PR descriptions → use the pr-description skill.
 
 ---
