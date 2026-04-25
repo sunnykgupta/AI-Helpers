@@ -17,7 +17,7 @@ Rather than maintaining identical rules in three separate files, this baseline c
 | `claude-code/CLAUDE.md` | Claude Code keyboard shortcuts, hooks, `@import` syntax, Plan Mode |
 | `codex/AGENTS.md` | Codex layering order, `--ask-for-approval` workflow, programmatic checks |
 | `cursor/.cursor/rules/project-always.mdc` | `.mdc` front-matter, `alwaysApply` flag, language-scoped companion rules |
-| `opencode/AGENTS.md` | OpenCode agents, skills, plan/build modes, layered rules |
+| `.opencode/AGENTS.md` | OpenCode agents, skills, plan/build modes, layered rules |
 
 ## How to use
 
