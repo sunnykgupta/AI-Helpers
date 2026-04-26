@@ -142,27 +142,27 @@ curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.openco
   -o ~/.config/opencode/AGENTS.md
 
 # Optional: Skills (commit-message, pr-description, codereview)
-mkdir -p ..opencode/skills
-curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/..opencode/skills/commit-message/SKILL.md \
-  -o ..opencode/skills/commit-message/SKILL.md
-curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/..opencode/skills/pr-description/SKILL.md \
-  -o ..opencode/skills/pr-description/SKILL.md
-curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/..opencode/skills/codereview/SKILL.md \
-  -o ..opencode/skills/codereview/SKILL.md
+mkdir -p .opencode/skills
+curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/skills/commit-message/SKILL.md \
+  -o .opencode/skills/commit-message/SKILL.md
+curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/skills/pr-description/SKILL.md \
+  -o .opencode/skills/pr-description/SKILL.md
+curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/skills/codereview/SKILL.md \
+  -o .opencode/skills/codereview/SKILL.md
 
 # Optional: Custom agents (code-reviewer, review-runner)
-mkdir -p ..opencode/agents
-curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/..opencode/agents/code-reviewer.md \
-  -o ..opencode/agents/code-reviewer.md
-curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/..opencode/agents/review-runner.md \
-  -o ..opencode/agents/review-runner.md
+mkdir -p .opencode/agents
+curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/agents/code-reviewer.md \
+  -o .opencode/agents/code-reviewer.md
+curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/agents/review-runner.md \
+  -o .opencode/agents/review-runner.md
 
 # Optional: Language-scoped rules (TypeScript, Python)
-mkdir -p ..opencode/rules
-curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/..opencode/rules/typescript.md \
-  -o ..opencode/rules/typescript.md
-curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/..opencode/rules/python.md \
-  -o ..opencode/rules/python.md
+mkdir -p .opencode/rules
+curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/rules/typescript.md \
+  -o .opencode/rules/typescript.md
+curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/rules/python.md \
+  -o .opencode/rules/python.md
 ```
 
 ## Shared baseline
