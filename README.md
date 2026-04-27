@@ -9,7 +9,7 @@ A collection of helper (`.md` / `.mdc`) files for use across various Gen AI codi
 | [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | [`claude-code/`](./claude-code/) | `CLAUDE.md` |
 | [OpenAI Codex](https://openai.com/codex) | [`codex/`](./codex/) | `AGENTS.md` |
 | [Cursor](https://www.cursor.com/) | [`cursor/`](./cursor/) | `.cursor/rules/*.mdc` |
-| [OpenCode](https://opencode.ai) | [`..opencode/`](./..opencode/) | `AGENTS.md` |
+| [OpenCode](https://opencode.ai) | [`.opencode/`](./.opencode/) | `AGENTS.md` |
 
 ## Structure
 
@@ -32,7 +32,7 @@ AI-Helpers/
 │           ├── project-always.mdc         ← always-applied baseline rules
 │           ├── typescript.mdc             ← TypeScript-scoped companion rules
 │           └── python.mdc                 ← Python-scoped companion rules
-├── ..opencode/
+├── .opencode/
 │   ├── AGENTS.md                          ← OpenCode instruction file
 │   ├── README.md
 │   ├── skills/                       ← reusable skills (PR descriptions, commits, code review)
