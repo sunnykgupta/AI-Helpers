@@ -9,6 +9,7 @@ A collection of helper (`.md` / `.mdc`) files for use across various Gen AI codi
 | [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | [`claude-code/`](./claude-code/) | `CLAUDE.md` |
 | [OpenAI Codex](https://openai.com/codex) | [`codex/`](./codex/) | `AGENTS.md` |
 | [Cursor](https://www.cursor.com/) | [`cursor/`](./cursor/) | `.cursor/rules/*.mdc` |
+| [OpenCode](https://opencode.ai) | [`.opencode/`](./.opencode/) | `AGENTS.md` |
 
 ## Structure
 
@@ -24,13 +25,19 @@ AI-Helpers/
 ├── codex/
 │   ├── README.md
 │   └── AGENTS.md                          ← Codex instruction file
-└── cursor/
-    ├── README.md
-    └── .cursor/
-        └── rules/
-            ├── project-always.mdc         ← always-applied baseline rules
-            ├── typescript.mdc             ← TypeScript-scoped companion rules
-            └── python.mdc                 ← Python-scoped companion rules
+├── cursor/
+│   ├── README.md
+│   └── .cursor/
+│       └── rules/
+│           ├── project-always.mdc         ← always-applied baseline rules
+│           ├── typescript.mdc             ← TypeScript-scoped companion rules
+│           └── python.mdc                 ← Python-scoped companion rules
+├── .opencode/
+│   ├── AGENTS.md                          ← OpenCode instruction file
+│   ├── README.md
+│   ├── skills/                       ← reusable skills (PR descriptions, commits, code review)
+│   ├── agents/                        ← custom agents (code-reviewer, review-runner)
+│   └── rules/                         ← language-scoped rules (TypeScript, Python)
 ```
 
 ## Native paths
@@ -68,6 +75,18 @@ globs:               # optional — restrict rule to matching file patterns (e.g
 alwaysApply: true    # true = loads for every Agent interaction; false = semantic match only
 ---
 ```
+
+### OpenCode — `AGENTS.md` / `AGENTS.local.md`
+
+OpenCode reads `AGENTS.md` from multiple locations with layered precedence:
+
+| Scope | Path | Notes |
+|-------|------|-------|
+| Project | `<repo-root>/AGENTS.md` | Checked into version control; shared with the team |
+| Project | `<repo-root>/AGENTS.local.md` | Gitignored; personal overrides |
+| Global | `~/.config/opencode/AGENTS.md` | Applies to every OpenCode session on this machine |
+
+OpenCode also supports Claude Code-compatible instruction files: project-level `CLAUDE.md` (that is, `<repo-root>/CLAUDE.md`) and global `~/.claude/CLAUDE.md`. Skills live in `.opencode/skills/<name>/SKILL.md` (project) or `~/.config/opencode/skills/<name>/SKILL.md` (global).
 
 ## Quickstart
 
@@ -110,6 +129,40 @@ curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/cursor/
 # Optional: Python companion rules
 curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/cursor/.cursor/rules/python.mdc \
   -o .cursor/rules/python.mdc
+```
+
+**OpenCode**
+```bash
+# Project-level (add to your repo)
+curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/AGENTS.md \
+  -o AGENTS.md
+
+# Global (applies to all your projects)
+curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/AGENTS.md \
+  -o ~/.config/opencode/AGENTS.md
+
+# Optional: Skills (commit-message, pr-description, codereview)
+mkdir -p .opencode/skills
+curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/skills/commit-message/SKILL.md \
+  -o .opencode/skills/commit-message/SKILL.md
+curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/skills/pr-description/SKILL.md \
+  -o .opencode/skills/pr-description/SKILL.md
+curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/skills/codereview/SKILL.md \
+  -o .opencode/skills/codereview/SKILL.md
+
+# Optional: Custom agents (code-reviewer, review-runner)
+mkdir -p .opencode/agents
+curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/agents/code-reviewer.md \
+  -o .opencode/agents/code-reviewer.md
+curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/agents/review-runner.md \
+  -o .opencode/agents/review-runner.md
+
+# Optional: Language-scoped rules (TypeScript, Python)
+mkdir -p .opencode/rules
+curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/rules/typescript.md \
+  -o .opencode/rules/typescript.md
+curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.opencode/rules/python.md \
+  -o .opencode/rules/python.md
 ```
 
 ## Shared baseline
