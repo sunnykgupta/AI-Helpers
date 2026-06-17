@@ -7,9 +7,9 @@ This directory contains helper files and ways of working for [OpenCode](https://
 | File | Description |
 |------|-------------|
 | [AGENTS.md](./AGENTS.md) | Agent instructions, ways of working, and OpenCode-specific reminders |
-| [..opencode/skills/](./..opencode/skills/) | Reusable skill definitions (PR descriptions, commit messages, code review) |
-| [..opencode/agents/](./..opencode/agents/) | Custom agent configurations (code-reviewer, review-runner) |
-| [..opencode/rules/](./..opencode/rules/) | Language-scoped rules (TypeScript, Python) |
+| [skills/](./skills/) | Reusable skill definitions (PR descriptions, commit messages, code review) |
+| [agents/](./agents/) | Custom agent configurations (code-reviewer, review-runner) |
+| [rules/](./rules/) | Language-scoped rules (TypeScript, Python) |
 
 ## Native paths
 
@@ -43,7 +43,7 @@ curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.openco
 
 ## Skills
 
-OpenCode should consult the skills in `..opencode/skills/` for the following tasks:
+OpenCode should consult the skills in `.opencode/skills/` for the following tasks:
 
 - **Writing commit messages** → use the `commit-message` skill
 - **Writing PR descriptions** → use the `pr-description` skill
@@ -51,7 +51,7 @@ OpenCode should consult the skills in `..opencode/skills/` for the following tas
 
 ## Custom Agents
 
-OpenCode comes with built-in agents (build, plan, general, explore). You can also define custom agents in `..opencode/agents/`:
+OpenCode comes with built-in agents (build, plan, general, explore). You can also define custom agents in `.opencode/agents/`:
 
 - **code-reviewer** — Read-only code review (no file edits)
 - **review-runner** — Full code review that runs linting, typechecks, and tests
