@@ -111,3 +111,29 @@ Always run lint/typecheck after a series of edits.
   ```
 
   Place scoped files alongside this one in `.cursor/rules/`.
+
+### MCP Servers
+
+Add external tools (databases, APIs, custom capabilities) by creating `.cursor/mcp.json` at the project root:
+
+```json
+{
+  "mcpServers": {
+    "my-tool": {
+      "command": "npx",
+      "args": ["-y", "@my-org/my-mcp-tool"]
+    }
+  }
+}
+```
+
+For global MCP servers (available in all projects), use `~/.cursor/mcp.json`. After adding a server, enable it in **Cursor Settings → MCP**.
+
+### Background Agents
+
+Cursor Background Agents run autonomously on GitHub issues and branches without requiring an open IDE session. To use:
+
+- Enable via **Cursor Settings → Beta → Background Agent**.
+- Trigger from the Cursor dashboard or by assigning issues; the agent opens a PR when done.
+- Background agents run in a sandboxed environment and can read/write files and run terminal commands.
+- These rules are automatically available to background agent sessions.

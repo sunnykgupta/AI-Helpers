@@ -100,22 +100,60 @@ Writing PR descriptions → use the pr-description skill.
 |---------|-------|
 | **Compact / Clear context** | `/compact` summarises and continues; `/clear` resets entirely. Use between unrelated tasks. |
 | **Plan Mode** | Press **Ctrl+G** to enter Plan Mode — Claude proposes a plan before writing any code. Use for tasks spanning multiple files. |
+| **Extended thinking** | Include `think` or `ultrathink` in your message to trigger deeper reasoning before responding. `ultrathink` is more intensive and uses more tokens. |
 | **Skills** | Invoke a skill with `/skill-name` (e.g. `/codereview`, `/explain`). Skills are predefined prompt pipelines. |
+| **Custom commands** | Place markdown files in `.claude/commands/` to create project-specific slash commands (e.g. `.claude/commands/commit.md` → `/commit`). |
+| **Plugins** | Install community and official plugins with `/plugin install <name>`. Plugins bundle commands, agents, skills, hooks, and MCP servers. Browse at `claude.ai/marketplace`. |
 | **File references** | Use `@path/to/file` to include a file's content inline in your message (e.g. `@src/api/users.ts`). |
 | **Imports in CLAUDE.md** | Use `@path/to/other.md` to compose multiple instruction files (e.g. `@.claude/security.md`). Claude Code-only syntax. |
+| **MCP servers** | Add external tools via `claude mcp add <name> <command>`. Configuration is saved to `.mcp.json` (project) or `~/.claude/mcp.json` (global). |
 | **Subagents** | For large investigations spanning many files or modules, ask Claude to launch a subagent rather than cramming everything into one context. |
 
 ### Hooks vs CLAUDE.md Instructions
 
 For actions that must **always** happen without exception (e.g. running a linter after every edit, blocking a specific shell command), prefer **hooks** defined in `.claude/settings.json` over instructions in this file. Hooks are deterministic and enforced programmatically; CLAUDE.md instructions are best-effort guidance.
 
+Current hook event types:
+
+| Hook | When it fires |
+|------|--------------|
+| `PreToolUse` | Before any tool call (Bash, Edit, Write, etc.) — use to intercept or block |
+| `PostToolUse` | After a tool call completes — use to run linters, tests, or side effects |
+| `Stop` | When Claude finishes a turn — use for post-turn analysis (e.g. security diff review) |
+| `SessionStart` | At the start of each session — use to inject additional context |
+
 ```jsonc
 // .claude/settings.json (example)
 {
   "hooks": {
-    "postEditFile": ["npm run lint --fix"]
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [{ "type": "command", "command": "npm run lint --fix" }]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [{ "type": "command", "command": "~/.claude/hooks/check-command.sh" }]
+      }
+    ]
   }
 }
+```
+
+### Plugin Structure
+
+Plugins live at the project level under `.claude/` (or globally under `~/.claude/`). A typical plugin layout:
+
+```
+.claude/
+├── commands/          ← custom slash commands  (e.g. commit.md → /commit)
+├── agents/            ← subagent definitions
+├── skills/            ← reusable skills (commit-message, pr-description, …)
+├── hooks/             ← hook scripts
+├── settings.json      ← hook wiring, permissions, model preferences
+└── mcp.json           ← MCP server configuration (alternative: .mcp.json at repo root)
 ```
 
 ### Personal Overrides

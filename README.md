@@ -52,6 +52,16 @@ Each tool reads instruction files from specific locations. Understanding the dif
 | Project | `<repo-root>/CLAUDE.md` | Checked into version control; shared with the team |
 | Local override | `<repo-root>/CLAUDE.local.md` | Gitignored; personal preferences not shared with the team |
 
+Claude Code also reads supplementary files from `.claude/`:
+
+| Path | Purpose |
+|------|---------|
+| `.claude/settings.json` | Hooks, permissions, model preferences |
+| `.claude/commands/<name>.md` | Custom slash commands (e.g. `/commit`) |
+| `.claude/agents/<name>.md` | Subagent definitions |
+| `.claude/skills/<name>/SKILL.md` | Reusable skills |
+| `.mcp.json` or `.claude/mcp.json` | MCP server configuration |
+
 ### Codex — `AGENTS.md`
 
 | Scope | Path | Notes |
@@ -75,6 +85,8 @@ globs:               # optional — restrict rule to matching file patterns (e.g
 alwaysApply: true    # true = loads for every Agent interaction; false = semantic match only
 ---
 ```
+
+MCP servers are configured in `.cursor/mcp.json` (project) or `~/.cursor/mcp.json` (global) and enabled in **Cursor Settings → MCP**.
 
 ### OpenCode — `AGENTS.md` / `AGENTS.local.md`
 
