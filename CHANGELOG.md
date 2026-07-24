@@ -20,9 +20,12 @@ Tool-specific entries are prefixed with the relevant tool name (e.g. **[Claude C
 - `cursor/.cursor/rules/python.mdc` — Python-scoped Cursor rules (type annotations, ruff/black, pytest).
 - `cursor/.cursor/rules/project-always.mdc` now lives under `cursor/` so it mirrors the path users copy into their own projects.
 - Root `README.md` expanded with native-path documentation, curl quickstart one-liners, and `.mdc` front-matter notes.
+- Agentic systems guidance across the shared baseline and tool-specific helper files: agentic loops, graph workflows, memory/context patterns, and human-oversight checkpoints.
 
 ### Changed
 - `claude/` directory renamed to `claude-code/` for clarity.
+- Root `README.md` now documents the new loops/graphs/memory guidance and where each tool-specific file expresses it.
+- `shared/AGENTS.md`, `claude-code/CLAUDE.md`, `codex/AGENTS.md`, `cursor/.cursor/rules/project-always.mdc`, and `.opencode/AGENTS.md` now use consistent terminology for modern agent workflows.
 
 ---
 
