@@ -77,6 +77,36 @@ Prefer running a single targeted test over the full suite for speed.
 - Use hooks for actions that must happen every time without exception
   (configure in `.claude/settings.json` or run `/hooks`).
 
+## Agentic Loops
+
+- Treat an agent as an LLM calling tools in a loop: **Observe → Reason → Act → repeat** until a stop condition is met.
+- Design long-running loops to be resumable. Persist checkpoints, scratchpads, or explicit state so work can continue after interruption.
+- Scale effort to task complexity. Give explicit step budgets, completion criteria, and verification checks so the agent knows when to stop.
+- Prefer append-only context for loop state when practical. Avoid rewriting prior observations just to restate them.
+- Keep failed tool results and error evidence in context unless they contain sensitive data; the agent uses them to avoid repeating mistakes.
+
+## Graph Workflows
+
+- Structure larger agent systems as directed graphs: nodes for actions, edges for transitions, and explicit state passed between nodes.
+- Use deterministic workflow nodes for routing, validation, and formatting; use agent nodes only where open-ended reasoning is required.
+- Separate planning from execution. Use Plan Mode or a written plan before any write, run, or irreversible step.
+- Prefer orchestrator-worker topologies over peer-to-peer worker coordination unless decentralization is the explicit requirement.
+- Keep tool sets small, distinct, and well-described. Prefer a few atomic tools over many overlapping ones.
+
+## Memory & Context
+
+- Design for four memory layers: **working** (current session), **episodic** (history), **semantic** (facts), and **procedural** (rules such as `CLAUDE.md` and hooks).
+- For long tasks, externalize the plan and current progress to a scratchpad, state field, or task tracker and re-read it regularly to prevent drift.
+- Apply four context strategies deliberately: **write**, **select**, **compress**, and **isolate**.
+- Protect high-priority constraints and safety rules from decay or summarization; compact stale low-value context instead of letting it grow forever.
+- Keep execution traces for non-deterministic systems — every model call, tool action, and state transition should be inspectable.
+
+## Human Oversight for Agents
+
+- Pause for approval before high-risk or irreversible actions.
+- Never execute raw model output directly; validate structured outputs before turning them into commands, code, or workflow transitions.
+- Run generated code and high-trust actions in sandboxed, least-privilege environments.
+
 ## Documentation
 
 - Documentation lives in docstrings/JSDoc of the functions or classes it describes.

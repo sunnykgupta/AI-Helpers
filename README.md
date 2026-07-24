@@ -179,9 +179,27 @@ curl -fsSL https://raw.githubusercontent.com/sunnykgupta/AI-Helpers/main/.openco
 
 ## Shared baseline
 
-[`shared/AGENTS.md`](./shared/AGENTS.md) is the **common source of truth** for rules that apply regardless of which AI tool you are using (code style, error handling, testing, security, git, workflow, documentation). The tool-specific files extend it with tool-native features and reminders.
+[`shared/AGENTS.md`](./shared/AGENTS.md) is the **common source of truth** for rules that apply regardless of which AI tool you are using (code style, error handling, testing, security, git, workflow, documentation, agentic loops, graph workflows, memory, and human oversight). The tool-specific files extend it with tool-native features and reminders.
+
+## Latest agent patterns
+
+The helper files now include a lightweight, vendor-neutral baseline for modern agent systems:
+
+- **Agentic loops** — treat agents as Observe → Reason → Act loops with explicit stop criteria, checkpoints, and effort budgets
+- **Graph workflows** — use directed state graphs, separate planning from execution, and prefer orchestrator-worker topologies
+- **Memory & context** — distinguish working / episodic / semantic / procedural memory and use write/select/compress/isolate deliberately
+- **Human oversight** — add approval breakpoints, validate structured outputs before execution, and run high-trust actions in sandboxes
+
+### Where these patterns live
+
+| File | What it adds |
+|------|--------------|
+| [`shared/AGENTS.md`](./shared/AGENTS.md) | Canonical cross-tool guidance for loops, graphs, memory, and human oversight |
+| [`claude-code/CLAUDE.md`](./claude-code/CLAUDE.md) | Connects the baseline to Claude Code Plan Mode, hooks, subagents, and context management |
+| [`codex/AGENTS.md`](./codex/AGENTS.md) | Applies the same baseline to Codex's layered `AGENTS.md` model and approval-first workflow |
+| [`cursor/.cursor/rules/project-always.mdc`](./cursor/.cursor/rules/project-always.mdc) | Applies the baseline to always-on Cursor rules alongside MCP and Background Agent notes |
+| [`.opencode/AGENTS.md`](./.opencode/AGENTS.md) | Applies the baseline to OpenCode plan/build modes, skills, and custom agents |
 
 ## Contributing
 
 See [`CHANGELOG.md`](./CHANGELOG.md) for a history of changes to the helper files. When updating rules, add an entry there so teams can audit what changed and update their copies.
-
