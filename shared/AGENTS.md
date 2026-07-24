@@ -107,7 +107,7 @@ Prefer running a single targeted test over the full suite for speed.
 
 - Structure larger agent systems as directed graphs: nodes for actions, edges for transitions, and explicit state passed between nodes.
 - Use deterministic workflow nodes for routing, validation, and formatting; use agent nodes only where open-ended reasoning is required.
-- Separate planning from execution. Define or review the plan before any write, run, or irreversible step.
+- Separate planning from execution. Review the plan before any write, run, or irreversible step.
 - Prefer orchestrator-worker topologies over peer-to-peer worker coordination unless decentralization is the explicit requirement.
 - Keep tool sets small, distinct, and well-described. Prefer a few atomic tools over many overlapping ones.
 
