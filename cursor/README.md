@@ -24,6 +24,25 @@ alwaysApply: true    # true = loaded for every Agent interaction; false = semant
 
 Rules **do not** work from arbitrary directories or with `.md`/`.markdown` extensions — the `.mdc` extension and front-matter are required.
 
+## MCP Servers
+
+Cursor supports [Model Context Protocol (MCP)](https://modelcontextprotocol.io) servers for giving the Agent access to external tools, APIs, and databases.
+
+| Scope | Path | Notes |
+|-------|------|-------|
+| Project | `<repo-root>/.cursor/mcp.json` | Checked into version control; shared with the team |
+| Global | `~/.cursor/mcp.json` | Available in all projects on this machine |
+
+After adding a server, enable it in **Cursor Settings → MCP**.
+
+## Background Agents
+
+Cursor Background Agents run autonomously on GitHub issues and branches — no IDE session required. Enable under **Cursor Settings → Beta → Background Agent**. The agent opens a PR when the task is complete. Rules in `.cursor/rules/` are automatically available to background agent sessions.
+
+## BugBot
+
+Cursor BugBot performs automated PR reviews by scanning changes for bugs and regressions before you merge. Enable it in **Cursor Settings → BugBot** and connect your GitHub repository.
+
 ## Quickstart
 
 Copy the full `.cursor/rules/` directory into your project root:
